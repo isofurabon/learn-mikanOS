@@ -11,7 +11,6 @@ if [ $# -gt 0 ]; then
         else
                 work_dir=$(mktemp -d)
                 for b in $@; do
-                        printf "\x${b}"
                         printf "\x${b}" >>${work_dir}/a.bin
                 done
                 objdump -D -b binary -M intel -m i386:x86-64 ${work_dir}/a.bin
