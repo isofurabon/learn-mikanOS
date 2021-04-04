@@ -1,5 +1,5 @@
 # based on https://github.com/cupnes/introduction_to_x86_64_machine_language_samples/blob/master/tools/as_dump
-#!/bin/zsh
+#!/bin/bash
 
 # set -uex
 set -ue

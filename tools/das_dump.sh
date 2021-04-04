@@ -1,5 +1,5 @@
 # based on https://github.com/cupnes/introduction_to_x86_64_machine_language_samples/blob/master/tools/das_dump
-#!/bin/zsh
+#!/bin/bash
 
 # for debug
 # set -uex
