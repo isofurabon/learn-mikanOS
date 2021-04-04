@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/base:0-${VARIANT}
 MAINTAINER isofurabon
 
 # install packages
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get -y install --no-install-recommends git ansible
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get -y install --no-install-recommends git ansible dosfstools
 USER vscode
 
 # setup mikanos-build environment
