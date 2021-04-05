@@ -8,10 +8,16 @@ MAINTAINER isofurabon
 
 # install packages
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get -y install --no-install-recommends git ansible dosfstools
+
+# change user to "vscode"
 USER vscode
 
 # setup mikanos-build environment
 RUN cd ~ && git clone https://github.com/uchan-nos/mikanos-build.git osbook
 RUN cd ~/osbook/devenv && ansible-playbook -K -i ansible_inventory ansible_provision.yml 
 
+# clone mikanOS
+RUN cd ~ && git clone https://github.com/uchan-nos/mikanos.git
+
+# remove qtmu-system-gui because there is no gui on this docker.
 RUN sudo apt-get -y remove qemu-system-gui
