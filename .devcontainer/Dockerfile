@@ -14,3 +14,4 @@ USER vscode
 RUN cd ~ && git clone https://github.com/uchan-nos/mikanos-build.git osbook
 RUN cd ~/osbook/devenv && ansible-playbook -K -i ansible_inventory ansible_provision.yml 
 
+RUN sudo apt-get -y remove qemu-system-gui
