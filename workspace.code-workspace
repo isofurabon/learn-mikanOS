@@ -7,5 +7,7 @@
 			"path": "../../home/vscode/mikanos"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"git.autoRepositoryDetection": false
+	}
 }
