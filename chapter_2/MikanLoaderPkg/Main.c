@@ -73,7 +73,12 @@ EFI_STATUS SaveMemoryMap(struct MemoryMap* map, EFI_FILE_PROTOCOL* file){
         iter += map->descriptor_size, i++){
             EFI_MEMORY_DESCRIPTOR* desc = (EFI_MEMORY_DESCRIPTOR*)iter;
 
-            len = AsciiSPrint(buf, sizeof(buf), "%u, %-ls, %08lx, %lx, %lx\n", i, desc->Type, GetMemoryTypeUnicode(desc->Type), desc->PhysicalStart, desc->NumberOfPages, desc->Attribute & 0xfffflu);
+            len = AsciiSPrint(
+                buf, sizeof(buf), 
+                "%u, %x, %-ls, %08lx, %lx, %lx\n", 
+                i, desc->Type, GetMemoryTypeUnicode(desc->Type), 
+                desc->PhysicalStart, desc->NumberOfPages, 
+                desc->Attribute & 0xfffflu);
 
             file->Write(file, &len, buf);
         }
