@@ -2,8 +2,8 @@
 
 set -e
 
+vm_root="/workspaces/learn-mikanOS/mnt"
 root_dir="/workspaces/learn-mikanOS"
-work_dir=$(pwd)
 edk2_dir=${HOME}/edk2
 target_config_file=../config/target.txt
 
@@ -21,8 +21,8 @@ source edksetup.sh
 build
 
 # copy efi to here
-cp Build/MikanLoaderX64/DEBUG_CLANG38/X64/Loader.efi ${work_dir}/bootx64.efi
+cp Build/MikanLoaderX64/DEBUG_CLANG38/X64/Loader.efi ${vm_root}/efi/boot/bootx64.efi
 
 # run
-${root_dir}/tools/run_qemu.sh ${root_dir}/vm/fs
+${root_dir}/tools/run_qemu.sh ${vm_root}
 
