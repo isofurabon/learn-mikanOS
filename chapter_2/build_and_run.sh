@@ -20,7 +20,7 @@ source edksetup.sh
 # build
 build
 
-# copy efi to here
+# copy efi to vm_root
 cp Build/MikanLoaderX64/DEBUG_CLANG38/X64/Loader.efi ${vm_root}/efi/boot/bootx64.efi
 
 # run
