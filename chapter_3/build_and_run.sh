@@ -5,11 +5,13 @@ set -e
 vm_root="/workspaces/learn-mikanOS/mnt"
 root_dir="/workspaces/learn-mikanOS"
 edk2_dir=${HOME}/edk2
+OSBOOK_DIR=${HOME}/osbook
 target_config_file=../config/target.txt
 
 # build kernel
-clang++ -O2 -Wall -g --target=x86_64-elf -ffreestanding -mno-red-zone -fno-exceptions -fno-rtti -std=c++17 -c kernel/main.cpp
-ld.lld --entry KernelMain -z norelro --image-base 0x100000 --static -o kernel.elf main.o
+source ${OSBOOK_DIR}/devenv/buildenv.sh
+clang++ ${CPPFLAGS} -O2 -Wall -g --target=x86_64-elf -ffreestanding -mno-red-zone -fno-exceptions -fno-rtti -std=c++17 -c kernel/main.cpp
+ld.lld ${LDFLAGS} --entry KernelMain -z norelro --image-base 0x100000 --static -o kernel.elf main.o
 
 # create symbolic link in edk2 directory
 ln -is ${root_dir}/chapter_3/MikanLoaderPkg ${edk2_dir}
