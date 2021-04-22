@@ -1,2 +1,4 @@
 *.o
 *.efi
+*.elf
+memmap
