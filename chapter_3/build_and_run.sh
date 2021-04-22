@@ -27,10 +27,10 @@ source edksetup.sh
 build
 
 # move efi to vm_root
-mv Build/MikanLoaderX64/DEBUG_CLANG38/X64/Loader.efi ${vm_root}/efi/boot/bootx64.efi
+cp -i Build/MikanLoaderX64/DEBUG_CLANG38/X64/Loader.efi ${vm_root}/efi/boot/bootx64.efi
 
 # move kernel to vm_root
-mv ${root_dir}/chapter_3/kernel.elf ${vm_root}/kernel.elf
+cp -i ${root_dir}/chapter_3/kernel.elf ${vm_root}/kernel.elf
 
 # run
 ${root_dir}/tools/run_qemu.sh ${vm_root}
