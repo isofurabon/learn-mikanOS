@@ -1,5 +1,5 @@
 # Learn and recreate [mikanOS](https://github.com/uchan-nos/mikanos).
-Just do it.
+Just do it!!
 
 # Develop Environment
 - Visual Studio Code with the custom ubuntu docker
