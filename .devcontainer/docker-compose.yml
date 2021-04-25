@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+    main:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        
+        init: true
+        volumes:
+            - ..:/learn-mikanos:cached
+            - /tmp/.X11-unix:/tmp/.X11-unix
+        
+        tty: true
+        user: vscode

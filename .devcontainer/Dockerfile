@@ -1,23 +1,14 @@
-# See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.166.0/containers/ubuntu/.devcontainer/base.Dockerfile
+FROM ghcr.io/sarisia/mikanos:latest
 
-# [Choice] Ubuntu version: bionic, focal
-ARG VARIANT="focal"
-FROM mcr.microsoft.com/vscode/devcontainers/base:0-${VARIANT}
-
-MAINTAINER isofurabon
-
-# install packages
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get -y install --no-install-recommends git ansible dosfstools
-
-# change user to "vscode"
+# change user to vscode for DISPLAY setting
 USER vscode
 
-# setup mikanos-build environment
-RUN cd ~ && git clone https://github.com/uchan-nos/mikanos-build.git osbook
-RUN cd ~/osbook/devenv && ansible-playbook -K -i ansible_inventory ansible_provision.yml 
+# use edk2 with a specified verison.
+# Please refer to https://github.com/uchan-nos/mikanos-build/issues/6
+RUN cd ~/edk2 && git checkout "38c8be123aced4cc8ad5c7e0da9121a181b94251" && make -C ~/edk2/BaseTools/Source/C
 
-# clone mikanOS
-RUN cd ~ && git clone https://github.com/uchan-nos/mikanos.git
+# clone mikanos
+RUN git clone https://github.com/uchan-nos/mikanos.git mikanos
 
-# remove qtmu-system-gui because there is no gui on this docker.
-RUN sudo apt-get -y remove qemu-system-gui
+# export display=:0 for wslg
+ENV DISPLAY=:0
