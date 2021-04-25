@@ -13,8 +13,8 @@ ln -fs ${PROJECT_ROOT}/chapter_2/MikanLoaderPkg ${EDK2_DIR}
 # copy target.txt to edk2 dir
 cp -f ${TARGET_CONFIG_FILE} ${EDK2_DIR}/Conf/target.txt
 
-# source edk
-cd ${EDK2_DIR} && source edksetup.sh && build
+# source edk & build
+(cd ${EDK2_DIR} && source edksetup.sh && build)
 
 # copy efi to vm_root
 cp ${EDK2_DIR}/Build/MikanLoaderX64/DEBUG_CLANG38/X64/Loader.efi ${VM_ROOT}/efi/boot/bootx64.efi
