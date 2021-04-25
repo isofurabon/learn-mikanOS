@@ -9,9 +9,9 @@ TARGET_CONFIG_FILE="${PROJECT_ROOT}/config/target.txt"
 OSBOOK_DIR=${HOME}/osbook
 
 # build kernel
-source ${OSBOOK_DIR}/devenv/buildenv.sh
-clang++ ${CPPFLAGS} -O2 -Wall -g --target=x86_64-elf -ffreestanding -mno-red-zone -fno-exceptions -fno-rtti -std=c++17 -c kernel/main.cpp
-ld.lld ${LDFLAGS} --entry KernelMain -z norelro --image-base 0x100000 --static -o kernel.elf main.o
+(source ${OSBOOK_DIR}/devenv/buildenv.sh && \
+clang++ ${CPPFLAGS} -O2 -Wall -g --target=x86_64-elf -ffreestanding -mno-red-zone -fno-exceptions -fno-rtti -std=c++17 -c kernel/main.cpp && \
+ld.lld ${LDFLAGS} --entry KernelMain -z norelro --image-base 0x100000 --static -o kernel.elf main.o)
 
 # create symbolic link in edk2 directory
 ln -fs ${PROJECT_ROOT}/chapter_3/MikanLoaderPkg ${EDK2_DIR}
