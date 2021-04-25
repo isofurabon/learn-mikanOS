@@ -2,27 +2,23 @@
 
 set -e
 
-vm_root="/workspaces/learn-mikanOS/mnt"
-root_dir="/workspaces/learn-mikanOS"
-edk2_dir=${HOME}/edk2
-target_config_file=../config/target.txt
+PROJECT_ROOT="/learn-mikanos"
+VM_ROOT="${PROJECT_ROOT}/mnt"
+EDK2_DIR="${HOME}/edk2"
+TARGET_CONFIG_FILE="${PROJECT_ROOT}/config/target.txt"
 
 # create symbolic link in edk2 directory
-ln -is ${root_dir}/chapter_2/MikanLoaderPkg ${edk2_dir}
+ln -fs ${PROJECT_ROOT}/chapter_2/MikanLoaderPkg ${EDK2_DIR}
 
 # copy target.txt to edk2 dir
-cp -i ${target_config_file} ${edk2_dir}/Conf/target.txt
+cp -f ${TARGET_CONFIG_FILE} ${EDK2_DIR}/Conf/target.txt
 
 # source edk
-cd ${edk2_dir} 
-source edksetup.sh
-
-# build
-build
+cd ${EDK2_DIR} && source edksetup.sh && build
 
 # copy efi to vm_root
-cp Build/MikanLoaderX64/DEBUG_CLANG38/X64/Loader.efi ${vm_root}/efi/boot/bootx64.efi
+cp ${EDK2_DIR}/Build/MikanLoaderX64/DEBUG_CLANG38/X64/Loader.efi ${VM_ROOT}/efi/boot/bootx64.efi
 
 # run
-${root_dir}/tools/run_qemu.sh ${vm_root}
+${PROJECT_ROOT}/tools/run_qemu.sh ${VM_ROOT}
 
