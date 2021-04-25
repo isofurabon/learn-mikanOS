@@ -9,7 +9,7 @@ services:
         init: true
         volumes:
             - ..:/learn-mikanos:cached
-            - /tmp/.X11-unix:/tmp/.X11-unix
+            - /tmp/.X11-unix:/tmp/.X11-unix:consistent
         
         tty: true
         user: vscode
