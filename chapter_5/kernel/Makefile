@@ -10,7 +10,7 @@ all: $(TARGET)
 
 .PHONY: clean
 clean: 
-	rm -rf *.o *.elf
+	rm -rf *.elf *.o .*.d
 
 $(TARGET): $(OBJS) Makefile
 	ld.lld $(LDFLAGS) -o $(TARGET) $(OBJS)
@@ -18,7 +18,7 @@ $(TARGET): $(OBJS) Makefile
 %.o: %.cpp Makefile
 	clang++ $(CPPFLAGS) $(CXXFLAGS) -c $<
 
-.%.d:%.cpp
+.%.d: %.cpp
 	clang++ $(CPPFLAGS) $(CXXFLAGS) -MM $< > $@
 	$(eval OBJ = $(<:.cpp=.o))
 	sed --in-place 's|$(notdir $(OBJ))|$(OBJ)|' $@
