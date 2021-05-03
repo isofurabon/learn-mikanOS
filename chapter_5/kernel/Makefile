@@ -10,7 +10,7 @@ all: $(TARGET)
 
 .PHONY: clean
 clean: 
-	rm -rf *.elf *.o .*.d
+	rm -rf *.elf *.o .*.d *.bin
 
 $(TARGET): $(OBJS) Makefile
 	ld.lld $(LDFLAGS) -o $(TARGET) $(OBJS)
@@ -24,13 +24,13 @@ $(TARGET): $(OBJS) Makefile
 	sed --in-place 's|$(notdir $(OBJ))|$(OBJ)|' $@
 
 hankaku.bin: hankaku.txt
-	../tools/makefont.py -o $@ $<
+	../../tools/makefont.py -o $@ $<
 
 hankaku.o: hankaku.bin
 	objcopy -I binary -O elf64-x86-64 -B i386:x86-64 $< $@
 
 .%.d: %.bin
-	touch %@
+	touch $@
 
 .PHONY: depends
 depends:
