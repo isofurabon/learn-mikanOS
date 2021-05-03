@@ -1,4 +1,5 @@
 *.o
 *.efi
 *.elf
+*.d
 memmap
