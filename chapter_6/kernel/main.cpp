@@ -82,6 +82,10 @@ extern "C" void KernelMain(const FrameBufferConfig& frame_buffer_config)
     const int FRAME_HEIGHT = frame_buffer_config.vertical_resolution;
 
     /* draw desktop */
+    FillRectangle(*pixel_writer, {0, 0}, {FRAME_WIDTH, FRAME_HEIGHT - 50}, DESKTOP_BG_COLOR);
+    FillRectangle(*pixel_writer, {0, FRAME_HEIGHT - 50}, {FRAME_WIDTH, 50}, {1, 8, 17});
+    FillRectangle(*pixel_writer, {0, FRAME_HEIGHT - 50}, {FRAME_WIDTH / 5, 50}, {80, 80, 80});
+    DrawRectangle(*pixel_writer, {10, FRAME_HEIGHT - 40}, {30, 30}, {160, 160, 160});
 
     // create console
     console = new(console_buf)Console{*pixel_writer, DESKTOP_FG_COLOR, DESKTOP_BG_COLOR};
