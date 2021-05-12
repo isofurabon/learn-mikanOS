@@ -1,10 +1,11 @@
 #pragma once
 
 enum class LogLevel {
-    Error = 3,
-    Warn = 4,
-    Info = 6,
-    Debug = 7
+    Error = 0,
+    Warn,
+    Info,
+    Debug,
+    LastOfLogLevel 
 };
 
 // set logging level

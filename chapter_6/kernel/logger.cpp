@@ -2,6 +2,7 @@
 
 #include <cstddef>
 #include <cstdio>
+#include <array>
 
 #include "console.hpp"
 
@@ -10,6 +11,16 @@ namespace {
 }
 
 extern Console* console;
+
+static constexpr std::array<const char*, static_cast<size_t>(LogLevel::LastOfLogLevel)> logLevelsName = {
+    "Error",
+    "Warn",
+    "Info",
+    "Debug"
+};
+static const char* GetLogLevel(const LogLevel level) {
+    return logLevelsName[static_cast<size_t>(level)];
+}
 
 void SetLogLevel(const LogLevel level) {
     log_level = level;
@@ -28,6 +39,7 @@ int Log(const LogLevel level, const char* format, ...) {
     result = vsprintf(s, format, ap);
     va_end(ap);
 
+    console->PutString(GetLogLevel(level));
     console->PutString(s);
     return result;
 }
