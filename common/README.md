@@ -1,0 +1,1 @@
+USB library codes are copied from https://github.com/uchan-nos/mikanos/tree/master/kernel/usb
