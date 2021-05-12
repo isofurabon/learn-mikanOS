@@ -9,11 +9,14 @@ EDK2_DIR="${HOME}/edk2"
 TARGET_CONFIG_FILE="${PROJECT_ROOT}/config/target.txt"
 OSBOOK_DIR=${HOME}/osbook
 
+# ln usb code
+ln -fs ${PROJECT_ROOT}/common/usb ${PROJECT_ROOT}/${CHAPTER}/kernel/usb
+
 # build kernel
 (source ${OSBOOK_DIR}/devenv/buildenv.sh && make -C ${PROJECT_ROOT}/${CHAPTER}/kernel all)
 
 # create symbolic link in edk2 directory
-ln -fs ${PROJECT_ROOT}/${CHAPTER}/MikanLoaderPkg ${EDK2_DIR}
+ln -fs ${PROJECT_ROOT}/common/MikanLoaderPkg ${EDK2_DIR}
 
 # copy target.txt to edk2 dir
 cp -f ${TARGET_CONFIG_FILE} ${EDK2_DIR}/Conf/target.txt
