@@ -5,9 +5,9 @@
 class Error {
 public:
     enum Code {
-        Success,
-        Full,
-        Empty,
+        kSuccess,
+        kFull,
+        kEmpty,
         LastOfCode,
     };
 
