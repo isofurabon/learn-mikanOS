@@ -6,45 +6,12 @@
 #include "console.hpp"
 #include "pci.hpp"
 
-// void* operator new(size_t size, void* buf) {
-//     return buf;
-// }
-
 void operator delete(void* obj) noexcept {
 }
 
 constexpr PixelColor DESKTOP_BG_COLOR{45, 118, 237};
 constexpr PixelColor DESKTOP_FG_COLOR{255, 255, 255};
 
-constexpr int MOUSE_CURSOR_WIDTH  = 15;
-constexpr int MOUSE_CURSOR_HEIGHT = 24;
-
-constexpr char MOUSE_CURSOR_SHAPE[MOUSE_CURSOR_HEIGHT][MOUSE_CURSOR_WIDTH + 1] = {
-  "@              ",
-  "@@             ",
-  "@.@            ",
-  "@..@           ",
-  "@...@          ",
-  "@....@         ",
-  "@.....@        ",
-  "@......@       ",
-  "@.......@      ",
-  "@........@     ",
-  "@.........@    ",
-  "@..........@   ",
-  "@...........@  ",
-  "@............@ ",
-  "@......@@@@@@@@",
-  "@......@       ",
-  "@....@@.@      ",
-  "@...@ @.@      ",
-  "@..@   @.@     ",
-  "@.@    @.@     ",
-  "@@      @.@    ",
-  "@       @.@    ",
-  "         @.@   ",
-  "         @@@   ",
-};
 
 char pixel_writer_buf[sizeof(RGBResv8BitPerColorPixelWriter)];
 PixelWriter* pixel_writer;
@@ -92,16 +59,6 @@ extern "C" void KernelMain(const FrameBufferConfig& frame_buffer_config)
     console = new(console_buf)Console{*pixel_writer, DESKTOP_FG_COLOR, DESKTOP_BG_COLOR};
     printk("Welcome to MikanOS!\n");
 
-    /* draw mouse */
-    for(int dy = 0; dy < MOUSE_CURSOR_HEIGHT; ++dy){
-        for(int dx = 0; dx < MOUSE_CURSOR_WIDTH; ++dx){
-            if (MOUSE_CURSOR_SHAPE[dy][dx] == '@'){
-                pixel_writer->Write(200 + dx, 100 + dy, {0, 0, 0});
-            } else if (MOUSE_CURSOR_SHAPE[dy][dx] == '.'){
-                pixel_writer->Write(200 + dx, 100 + dy, {255, 255, 255});
-            }
-        }
-    }
 
     // Show Devices
     auto err = pci::ScanAllBus();
