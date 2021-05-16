@@ -7,16 +7,16 @@
 #include "console.hpp"
 
 namespace {
-    LogLevel log_level = LogLevel::Warn;
+    LogLevel log_level = LogLevel::kWarn;
 }
 
 extern Console* console;
 
 static constexpr std::array<const char*, static_cast<size_t>(LogLevel::LastOfLogLevel)> logLevelsName = {
-    "Error",
-    "Warn",
-    "Info",
-    "Debug"
+    "[Error]",
+    "[Warn]",
+    "[Info]",
+    "[Debug]"
 };
 static const char* GetLogLevel(const LogLevel level) {
     return logLevelsName[static_cast<size_t>(level)];

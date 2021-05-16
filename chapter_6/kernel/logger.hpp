@@ -1,10 +1,10 @@
 #pragma once
 
-enum class LogLevel {
-    Error = 0,
-    Warn,
-    Info,
-    Debug,
+enum LogLevel {
+    kError = 0,
+    kWarn,
+    kInfo,
+    kDebug,
     LastOfLogLevel 
 };
 

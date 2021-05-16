@@ -20,6 +20,7 @@ ln -fs ${PROJECT_ROOT}/chapter_4/MikanLoaderPkg ${EDK2_DIR}
 cp -f ${TARGET_CONFIG_FILE} ${EDK2_DIR}/Conf/target.txt
 
 # source edk & build
+rm -fr ${EDK2_DIR}/Build/*
 (cd ${EDK2_DIR} && source edksetup.sh && build)
 
 # move efi to vm_root
