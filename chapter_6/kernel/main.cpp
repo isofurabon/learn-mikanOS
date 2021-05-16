@@ -98,7 +98,7 @@ extern "C" void KernelMain(const FrameBufferConfig& frame_buffer_config)
     console = new(console_buf)Console{*pixel_writer, DESKTOP_FG_COLOR, DESKTOP_BG_COLOR};
     printk("Welcome to MikanOS!\n");
 
-    SetLogLevel(kDebug);
+    SetLogLevel(kWarn);
     
     // Setup mouse
     mouse_cursor = new(mouse_cursor_buf) MouseCursor{
