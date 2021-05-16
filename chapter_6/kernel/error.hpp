@@ -52,7 +52,7 @@ private:
         "kUnknownXHCISpeedID",
         "kNoWaiter",
     };
-    static_assert(Error::Code::kLastOfCode == code_names_.size());;
+    static_assert(Error::Code::kLastOfCode == m_code_names.size());;
 
 public:
     Error(Code code, const char* file, int line): m_code{code}, m_file{file}, m_line{line} {}
