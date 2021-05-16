@@ -125,10 +125,10 @@ extern "C" void KernelMain(const FrameBufferConfig& frame_buffer_config)
     for(int i = 0; i < pci::num_devices; ++i) {
         if (pci::devices[i].class_code.Match(0x0cu, 0x03u, 0x30u)) {
             xhc_dev = &pci::devices[i];
-        }
 
-        if (0x8086 == pci::ReadVendorId(*xhc_dev)) {
-            break;
+            if (0x8086 == pci::ReadVendorId(*xhc_dev)) {
+                break;
+            }
         }
     }
 
