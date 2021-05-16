@@ -15,7 +15,7 @@ struct ArrayLength<T[N]> {
 template <typename T>
 class MemMapRegister {
 public:
-    T read() const {
+    T Read() const {
         T tmp;
         for (size_t i = 0; i < m_len; ++i) {
             tmp.data[i] = m_value.data[i];
@@ -23,7 +23,7 @@ public:
         return tmp;
     }
 
-    void write(const T& value) {
+    void Write(const T& value) {
         T tmp;
         for (size_t i = 0; i < m_len; ++i) {
             m_value.data[i] = value.data[i];
@@ -40,7 +40,7 @@ struct DefaultBitmap {
     T data[1];
 
     DefaultBitmap& operator =(const T& value) {
-        data[o] = value;
+        data[0] = value;
     }
     operator T() const { return data[0]; }
 };

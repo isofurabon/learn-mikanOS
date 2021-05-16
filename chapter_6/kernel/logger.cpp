@@ -7,7 +7,7 @@
 #include "console.hpp"
 
 namespace {
-    LogLevel log_level = LogLevel::Warn;
+    LogLevel log_level = LogLevel::kWarn;
 }
 
 extern Console* console;
