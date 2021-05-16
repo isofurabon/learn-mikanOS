@@ -115,9 +115,9 @@ extern "C" void KernelMain(const FrameBufferConfig& frame_buffer_config)
         auto vender_id = pci::ReadVendorId(dev);
         auto class_code = pci::ReadClassCode(dev.bus, dev.device, dev.function);
 
-        Log(kDebug, "%d.%d.%d: vend %04x, class %08x, head %02x\n", 
+        Log(kDebug, "%d.%d.%d: vend %04x, class %08x (base:%02x, sub:%02x, interface:%02x) head %02x\n", 
             dev.bus, dev.device, dev.function,
-            vender_id, class_code, dev.header_type);
+            vender_id, class_code, class_code.base, class_code.sub, class_code.interface, dev.header_type);
     }
 
     // search xHC
