@@ -73,6 +73,10 @@ public:
         return m_code_names[static_cast<size_t>(this->m_code)];
     }
 
+    int Line() const {
+        return this->m_line;
+    }
+
     private:
         Code m_code;
         int m_line;
