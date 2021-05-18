@@ -4,7 +4,7 @@ services:
     main:
         build:
             context: .
-            dockerfile: Dockerfile
+            dockerfile: ../dockerfiles/dev.Dockerfile
         
         init: true
         volumes:
