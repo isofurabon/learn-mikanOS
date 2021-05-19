@@ -1,5 +1,4 @@
 #!/bin/sh -l
-ls -al
-pwd
-
-echo workspace=${GITHUB_WORKSPACE}
+for chapter in $( ls -d ${GITHUB_WORKSPACE}*/ | grep chapter_.*/$ ); do   
+    echo ${chapter}
+done
