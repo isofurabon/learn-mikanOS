@@ -1,6 +1,8 @@
 #!/bin/sh -l
 set -e
 
+ls ~/*
+
 WORKSPACE_ROOT="${GITHUB_WORKSPACE:-/learn-mikanos}"
 echo "Start Building..."
 
