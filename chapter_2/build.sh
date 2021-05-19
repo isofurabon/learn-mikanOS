@@ -15,5 +15,3 @@ cp -f ./MikanLoaderPkg/target.txt ${EDK2_DIR}/Conf/target.txt
 # source edk & build
 rm -fr ${EDK2_DIR}/Build/*
 (cd ${EDK2_DIR} && source edksetup.sh && build)
-
-echo "Build Complete!!"
