@@ -1,3 +1,4 @@
+[![CI](https://github.com/isofurabon/learn-mikanOS/actions/workflows/ci.yml/badge.svg)](https://github.com/isofurabon/learn-mikanOS/actions/workflows/ci.yml)
 # Learn and recreate [mikanOS](https://github.com/uchan-nos/mikanos).
 Just do it!!
 
