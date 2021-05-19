@@ -11,5 +11,6 @@ fi
 CHAPTER=$1
 WORKSPACE="${GITHUB_WORKSPACE:-/learn-mikanos}"
 
-# build
-(cd ${WORKSPACE}/${CHAPTER} && ./build.sh)
+$(cd ${WORKSPACE}/${CHAPTER} && ./build.sh)
+
+echo "Complete!!"
