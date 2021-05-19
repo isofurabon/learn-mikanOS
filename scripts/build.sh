@@ -13,4 +13,4 @@ WORKSPACE="${GITHUB_WORKSPACE:-/learn-mikanos}"
 
 $(cd ${WORKSPACE}/${CHAPTER} && ./build.sh)
 
-echo "Complete!!"
+echo "Build Complete!!"
