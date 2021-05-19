@@ -1,8 +1,7 @@
 #
 # For CI 
 #
-# FROM ghcr.io/sarisia/mikanos:latest
-FROM alpine:3.10
+FROM ghcr.io/sarisia/mikanos:latest
 
 COPY entrypoint.sh /entrypoint.sh
 
