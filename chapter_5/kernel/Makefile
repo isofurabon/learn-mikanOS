@@ -33,7 +33,7 @@ $(TARGET): $(OBJS) Makefile
 	sed --in-place 's|$(notdir $(OBJ))|$(OBJ)|' $@
 
 hankaku.bin: hankaku.txt
-	../../tools/makefont.py -o $@ $<
+	../../scripts/makefont.py -o $@ $<
 
 hankaku.o: hankaku.bin
 	objcopy -I binary -O elf64-x86-64 -B i386:x86-64 $< $@
