@@ -10,10 +10,10 @@ OSBOOK_DIR=${HOME}/osbook
 (source ${OSBOOK_DIR}/devenv/buildenv.sh && make -C ./kernel clean && make -C ./kernel all)
 
 # create symbolic link in edk2 directory
-ln -fs $(realpath ./MikanLoaderPkg) ${EDK2_DIR}
+ln -fs $(realpath ../chapter_4/MikanLoaderPkg) ${EDK2_DIR}
 
 # copy target.txt to edk2 dir
-cp -f ./MikanLoaderPkg/target.txt ${EDK2_DIR}/Conf/target.txt
+cp -f ../chapter_4/MikanLoaderPkg/target.txt ${EDK2_DIR}/Conf/target.txt
 
 # source edk & build
 rm -fr ${EDK2_DIR}/Build/*
