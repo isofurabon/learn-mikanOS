@@ -1,6 +1,3 @@
-#
-# For CI 
-#
 # MIT License
 
 # Copyright (c) 2021 Sarisia
