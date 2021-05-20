@@ -1,7 +1,10 @@
 #!/bin/sh -l
 set -e
 
-ls -al /home/runner/
+pwd
+ls -al
+echo $HOME
+ls $HOME
 
 WORKSPACE_ROOT="${GITHUB_WORKSPACE:-/learn-mikanos}"
 echo "Start Building..."
