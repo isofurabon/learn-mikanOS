@@ -4,3 +4,4 @@
 .*.d
 *.bin
 memmap
+chapter_*/kernel/usb
