@@ -5,7 +5,7 @@ set -e
 # build EDK II
 git clone --recursive https://github.com/tianocore/edk2.git ${HOME}/edk2 \
  && (cd ${HOME}/edk2 && git checkout 38c8be123aced4cc8ad5c7e0da9121a181b94251) \
- && make -C ${HOME}edk2/BaseTools/Source/C
+ && make -C ${HOME}/edk2/BaseTools/Source/C
 #  && rm -rf edk2
 
 # clone mikanos devenv
