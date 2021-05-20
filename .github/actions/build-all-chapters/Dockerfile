@@ -102,19 +102,6 @@ RUN for item in \
         update-alternatives --install "/usr/bin/${item}" "${item}" "/usr/bin/${item}-7" 50 \
     ; done
 
-# build EDK II
-RUN git clone --recursive https://github.com/tianocore/edk2.git ${HOME}/edk2 \
- && (cd edk2 && git checkout 38c8be123aced4cc8ad5c7e0da9121a181b94251) \
- && make -C edk2/BaseTools/Source/C
-#  && rm -rf edk2
-
-# clone mikanos devenv
-RUN git clone https://github.com/uchan-nos/mikanos-build.git ${HOME}/osbook
-
-# download standard libraries
-RUN curl -L https://github.com/uchan-nos/mikanos-build/releases/download/v2.0/x86_64-elf.tar.gz \
-  | tar xzvf - -C ${HOME}/osbook/devenv
-
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
