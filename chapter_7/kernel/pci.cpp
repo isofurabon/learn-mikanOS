@@ -128,7 +128,7 @@ namespace {
         auto msi_cap = ReadMSICapability(dev, cap_addr);
 
         if (msi_cap.header.bits.multi_msg_capable <= num_vector_exponent) {
-            msi_cap.header.bits.multi_msg_enable =msi_cap.header.bits.multi_msg_capable;
+            msi_cap.header.bits.multi_msg_enable = msi_cap.header.bits.multi_msg_capable;
         } else {
             msi_cap.header.bits.multi_msg_enable = num_vector_exponent;
         }
