@@ -240,7 +240,7 @@ namespace pci {
 
         // 64 bit address
         if (bar_index >= 5) {
-            return {bar, MAKE_ERROR(Error::kIndexOutOfRange)};
+            return {0, MAKE_ERROR(Error::kIndexOutOfRange)};
         }
 
         const auto bar_upper = ReadConfReg(device, addr + 4);
