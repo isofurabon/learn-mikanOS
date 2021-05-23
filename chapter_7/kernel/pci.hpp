@@ -134,7 +134,7 @@ namespace pci {
         kExtINT         = 0b111,
     };
 
-    Error ConfigureMSIFixedDestination(const Device& dev, uint32_t msg_addr, 
+    Error ConfigureMSIFixedDestination(const Device& dev, uint8_t apic_id, 
                        MSITriggerMode trigger_mode, MSIDeliveryMode delivery_mode,
-                       uint32_t msg_data, unsigned int num_vector_exponent);
+                       uint8_t vector, unsigned int num_vector_exponent);
 }
