@@ -154,7 +154,7 @@ namespace pci {
         IoOut32(ConfigAddress, address);
     }
     void WriteData(uint32_t value){
-        IoOut32(ConfigAddress, value);
+        IoOut32(ConfigData, value);
     }
 
     uint32_t ReadData() {
