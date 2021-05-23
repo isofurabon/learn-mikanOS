@@ -7,6 +7,9 @@ EDK2_DIR="${HOME}/edk2"
 OSBOOK_DIR=${HOME}/osbook
 
 # ln usb code
+if [ -d ./kernel/usb ]; then
+    unlink ./kernel/usb
+fi
 ln -fs ${WORKSPACE_ROOT}/common/usb ./kernel/usb
 
 # rebuild kernel

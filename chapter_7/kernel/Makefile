@@ -16,7 +16,7 @@ all: $(TARGET)
 
 .PHONY: clean
 clean: 
-	rm -rf *.elf *.o .*.d *.bin
+	rm -rf *.elf *.o .*.d *.bin usb/*.o usb/.*.d usb/classdriver/*.o usb/classdriver/.*.d usb/xhci/*.o usb/xhci/.*.d
 
 $(TARGET): $(OBJS) Makefile
 	ld.lld $(LDFLAGS) -o $(TARGET) $(OBJS) -lc -lc++
