@@ -233,7 +233,7 @@ extern "C" void KernelMain(const FrameBufferConfig& frame_buffer_config)
                 }
                 break;
             default:
-                Log(kError, "UUnknown message type: %d\n", msg.type);
+                Log(kError, "Unknown message type: %d\n", msg.type);
         }
     }
 }
