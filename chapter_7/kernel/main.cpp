@@ -18,6 +18,7 @@
 #include "usb/xhci/trb.hpp"
 #include "interrupt.hpp"
 #include "asmfunc.h"
+#include "queue.hpp"
 
 void operator delete(void* obj) noexcept {
 }
@@ -76,13 +77,17 @@ void SwitchEhci2Xhci(const pci::Device& xhc_dev) {
 
 usb::xhci::Controller* xhc;
 
+struct Message {
+    enum Type {
+        kInterruptXHCI,
+    } type;
+};
+
+ArrayQueue<Message>* main_queue;
+
 __attribute__((interrupt))
 void IntHandlerXHCI(InterruptFrame* frame) {
-    while (xhc->PrimaryEventRing()->HasFront()) {
-        if (auto err = ProcessEvent(*xhc)) {
-            Log(kError, "Error while ProcessEvent: %s at %s:%d\n", err.Name(), err.File(), err.Line());
-        }
-    }
+    main_queue->Push(Message{Message::kInterruptXHCI});
     NotifyEndOfInterrupt();
 }
 
@@ -119,6 +124,10 @@ extern "C" void KernelMain(const FrameBufferConfig& frame_buffer_config)
         pixel_writer, DESKTOP_BG_COLOR, {300, 200}
     };
 
+    // setup queue
+    std::array<Message, 32> main_queue_data;
+    ArrayQueue<Message> main_queue{main_queue_data};
+    ::main_queue = &main_queue;
 
     // Show Devices
     auto err = pci::ScanAllBus();
@@ -202,7 +211,31 @@ extern "C" void KernelMain(const FrameBufferConfig& frame_buffer_config)
         }
     }
 
-    while (1) __asm__("hlt");
+
+    // Process message
+    while (true) {
+        __asm__("cli"); //disable interrupt
+        if (main_queue.Count() == 0) {
+            __asm__("sti\nhlt"); // enable interrupt and hlt. (invoked by interrupt)
+            continue;
+        }
+
+        Message msg = main_queue.Front();
+        main_queue.Pop();
+        __asm__("sti");
+
+        switch(msg.type){
+            case Message::kInterruptXHCI:
+                while(xhc.PrimaryEventRing()->HasFront()){
+                    if(auto err = ProcessEvent(xhc)){
+                        Log(kError, "Error while ProcessEvent: %s at %s:%d\n", err.Name(), err.File(), err.Line());
+                    }
+                }
+                break;
+            default:
+                Log(kError, "UUnknown message type: %d\n", msg.type);
+        }
+    }
 }
 
 extern "C" void __cxa_pure_virtual() {
