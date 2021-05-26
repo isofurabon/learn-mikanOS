@@ -31,7 +31,7 @@ ArrayQueue<T>::ArrayQueue(std::array<T, N>& buf)
 
 template<typename T> 
 ArrayQueue<T>::ArrayQueue(T* buf, size_t size)
-    : m_data{buf}, m_read_pos{0}, m_write_pos{0}, m_count={0}, m_capacity{size}{}
+    : m_data{buf}, m_read_pos{0}, m_write_pos{0}, m_count{0}, m_capacity{size}{}
 
 // Methods
 template<typename T> 
@@ -61,6 +61,8 @@ Error ArrayQueue<T>::Pop() {
     if (m_read_pos == m_capacity){
         m_read_pos = 0;
     }
+
+    return MAKE_ERROR(Error::kSuccess);
 }
 
 template<typename T> 
