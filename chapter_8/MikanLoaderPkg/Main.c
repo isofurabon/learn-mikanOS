@@ -24,7 +24,7 @@ EFI_STATUS GetMemoryMap(struct MemoryMap* map){
         (EFI_MEMORY_DESCRIPTOR*)map->buffer,
         &map->map_key,
         &map->descriptor_size,
-        &map->descirptor_version
+        &map->descriptor_version
     );
 }
 
