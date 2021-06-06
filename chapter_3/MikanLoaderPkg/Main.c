@@ -204,7 +204,6 @@ EFI_STATUS EFIAPI UefiMain(EFI_HANDLE image_handle, EFI_SYSTEM_TABLE *system_tab
 
     EFI_FILE_PROTOCOL* memmap_file;
     status = root_dir->Open(root_dir, &memmap_file, L"\\memmap", EFI_FILE_MODE_READ | EFI_FILE_MODE_WRITE | EFI_FILE_MODE_CREATE, 0);
-
     if (EFI_ERROR(status)){
         Print(L"failed to open file '\\memmap': %r\n", status);
         Print(L"Ignored.\n");
