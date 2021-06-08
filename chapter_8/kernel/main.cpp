@@ -23,6 +23,7 @@
 #include "queue.hpp"
 #include "segment.hpp"
 #include "paging.hpp"
+#include "memory_manager.hpp"
 
 void operator delete(void* obj) noexcept {
 }
@@ -49,6 +50,9 @@ int printk(const char* format, ...){
     console->PutString(s);
     return result;
 }
+
+char memory_manager_buf[sizeof(BitmapMemoryManager)];
+BitmapMemoryManager* memory_manager;
 
 char mouse_cursor_buf[sizeof(MouseCursor)];
 MouseCursor* mouse_cursor;
@@ -142,20 +146,28 @@ extern "C" void KernelMainNewStack(const FrameBufferConfig& frame_buffer_config_
     SetupIdentityPageTable();
     /* Setup Paging To Here */
 
+    ::memory_manager = new(memory_manager_buf) BitmapMemoryManager;
+    
+
     // Print memory_map info
+    uintptr_t available_end = 0;
     const auto memory_map_base = reinterpret_cast<uintptr_t>(memory_map.buffer);
     for (uintptr_t iter = memory_map_base; iter < memory_map_base + memory_map.map_size; iter += memory_map.descriptor_size){
-        auto desc = reinterpret_cast<MemoryDescriptor*>(iter);
+        auto desc = reinterpret_cast<const MemoryDescriptor*>(iter);
+        if (available_end < desc->physical_start) {
+            memory_manager->MarkAllocated(FrameID{available_end / kBytesPerFrame}, (desc->physical_start - available_end) / kBytesPerFrame);
+        }
+
+        const auto physical_end = desc->physical_start + desc->number_of_pages * kUEFIPageSize;
 
         if (IsAvailable(static_cast<MemoryType>(desc->type))) {
-        printk("type = %u, phys = %08lx - %08lx, pages = %lu, attr = %08lx\n",
-            desc->type,
-            desc->physical_start,
-            desc->physical_start + desc->number_of_pages * 4096 - 1,
-            desc->number_of_pages,
-            desc->attribute);
+            available_end = physical_end;
+        } else {
+            memory_manager->MarkAllocated(FrameID{desc->physical_start / kBytesPerFrame}, desc->number_of_pages * kUEFIPageSize / kBytesPerFrame);
         }
     }
+
+    memory_manager->SetMemoryRange(FrameID{1}, FrameID{available_end / kBytesPerFrame});
     
     // Setup mouse
     mouse_cursor = new(mouse_cursor_buf) MouseCursor{
