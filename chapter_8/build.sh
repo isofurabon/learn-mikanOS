@@ -19,7 +19,7 @@ ln -fs ${WORKSPACE_ROOT}/common/usb ./kernel/usb
 ln -fs $(realpath ./MikanLoaderPkg) ${EDK2_DIR}
 
 # copy target.txt to edk2 dir
-cp -f ../chapter_4/MikanLoaderPkg/target.txt ${EDK2_DIR}/Conf/target.txt
+cp -f ../chapter_8/MikanLoaderPkg/target.txt ${EDK2_DIR}/Conf/target.txt
 
 # source edk & build
 rm -fr ${EDK2_DIR}/Build/*
