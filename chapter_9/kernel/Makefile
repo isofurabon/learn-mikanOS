@@ -1,5 +1,5 @@
 TARGET = kernel.elf
-OBJS = main.o graphics.o mouse.o font.o hankaku.o newlib_support.o console.o pci.o asmfunc.o libcxx_support.o logger.o interrupt.o segment.o paging.o memory_manager.o\
+OBJS = main.o graphics.o mouse.o font.o hankaku.o newlib_support.o console.o pci.o asmfunc.o libcxx_support.o logger.o interrupt.o segment.o paging.o memory_manager.o window.o layer.o\
 	   usb/memory.o usb/device.o usb/xhci/ring.o usb/xhci/trb.o usb/xhci/xhci.o \
        usb/xhci/port.o usb/xhci/device.o usb/xhci/devmgr.o usb/xhci/registers.o \
        usb/classdriver/base.o usb/classdriver/hid.o usb/classdriver/keyboard.o \
@@ -19,7 +19,7 @@ clean:
 	rm -rf *.elf *.o .*.d *.bin usb/*.o usb/.*.d usb/classdriver/*.o usb/classdriver/.*.d usb/xhci/*.o usb/xhci/.*.d
 
 $(TARGET): $(OBJS) Makefile
-	ld.lld $(LDFLAGS) -o $(TARGET) $(OBJS) -lc -lc++
+	ld.lld $(LDFLAGS) -o $(TARGET) $(OBJS) -lc -lc++ -lc++abi
 
 %.o: %.cpp Makefile
 	clang++ $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
