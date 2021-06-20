@@ -149,7 +149,7 @@ extern "C" void KernelMainNewStack(const FrameBufferConfig& frame_buffer_config_
     ::memory_manager = new(memory_manager_buf) BitmapMemoryManager;
     
 
-    // Print memory_map info
+    // setup memory_manager (search available frames)
     uintptr_t available_end = 0;
     const auto memory_map_base = reinterpret_cast<uintptr_t>(memory_map.buffer);
     for (uintptr_t iter = memory_map_base; iter < memory_map_base + memory_map.map_size; iter += memory_map.descriptor_size){
@@ -168,6 +168,11 @@ extern "C" void KernelMainNewStack(const FrameBufferConfig& frame_buffer_config_
     }
 
     memory_manager->SetMemoryRange(FrameID{1}, FrameID{available_end / kBytesPerFrame});
+
+    if (auto err = InitializeHeap(*memory_manager)) {
+        Log(kError, "failed to allocate pages: %s at %s:%d\n", err.Name(), err.File(), err.Line());
+        exit(1);
+    }
     
     // Setup mouse
     mouse_cursor = new(mouse_cursor_buf) MouseCursor{
