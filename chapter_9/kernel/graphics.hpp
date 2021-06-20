@@ -16,7 +16,7 @@ inline bool operator!=(const PixelColor& lhs, const PixelColor& rhs) {
 class PixelWriter {
 public:
     virtual ~PixelWriter() = default;
-    virtual void Write(int x, int y, const PixelColor& c) const = 0;
+    virtual void Write(int x, int y, const PixelColor& c) = 0;
     virtual int Width() const = 0;
     virtual int Height() const = 0;
 };
@@ -42,14 +42,14 @@ public:
     // https://cpprefjp.github.io/lang/cpp11/inheriting_constructors.html
     using FrameBufferWriter::FrameBufferWriter;
 
-    virtual void Write(int x, int y, const PixelColor& c) const override;
+    virtual void Write(int x, int y, const PixelColor& c) override;
 };
 
 class BGRResv8BitPerColorPixelWriter : public FrameBufferWriter {
 public:
     using FrameBufferWriter::FrameBufferWriter;
 
-    virtual void Write(int x, int y, const PixelColor& c) const override;
+    virtual void Write(int x, int y, const PixelColor& c) override;
 };
 
 template <typename T>
@@ -64,8 +64,8 @@ struct Vector2D {
     }
 };
 
-void DrawRectangle(const PixelWriter& writer, const Vector2D<int>& pos, const Vector2D<int>& size, const PixelColor& c);
-void FillRectangle(const PixelWriter& writer, const Vector2D<int>& pos, const Vector2D<int>& size, const PixelColor& c);
+void DrawRectangle(PixelWriter& writer, const Vector2D<int>& pos, const Vector2D<int>& size, const PixelColor& c);
+void FillRectangle(PixelWriter& writer, const Vector2D<int>& pos, const Vector2D<int>& size, const PixelColor& c);
 
 const PixelColor kDesktopBGColor{45, 118, 237};
 const PixelColor kDesktopFGColor{255, 255, 255};

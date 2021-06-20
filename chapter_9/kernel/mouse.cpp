@@ -2,7 +2,7 @@
 #include "graphics.hpp"
 
 namespace {
-    constexpr char MOUSE_CURSOR_SHAPE[MOUSE_CURSOR_HEIGHT][MOUSE_CURSOR_WIDTH + 1] = {
+    constexpr char MOUSE_CURSOR_SHAPE[kMouseCursorHeight][kMouseCursorWidth + 1] = {
     "@              ",
     "@@             ",
     "@.@            ",

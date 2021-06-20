@@ -2,6 +2,7 @@
 
 #include <cstring>
 #include "font.hpp"
+#include "layer.hpp"
 
 Console::Console(const PixelColor& fg_color, const PixelColor& bg_color):
     m_writer{nullptr}, m_fg_color{fg_color}, m_bg_color{bg_color}, m_buffer{}, m_cursor_row{0}, m_cursor_column{0} {}

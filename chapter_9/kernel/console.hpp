@@ -14,7 +14,7 @@ private:
     void NewLine();
     void Refresh();
 
-    const PixelWriter* m_writer;
+    PixelWriter* m_writer;
     const PixelColor m_fg_color, m_bg_color;
     char m_buffer[kRows][kColumns+1];
     int m_cursor_row, m_cursor_column;

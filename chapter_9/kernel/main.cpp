@@ -24,13 +24,11 @@
 #include "segment.hpp"
 #include "paging.hpp"
 #include "memory_manager.hpp"
+#include "window.hpp"
+#include "layer.hpp"
 
 void operator delete(void* obj) noexcept {
 }
-
-constexpr PixelColor DESKTOP_BG_COLOR{45, 118, 237};
-constexpr PixelColor DESKTOP_FG_COLOR{255, 255, 255};
-
 
 char pixel_writer_buf[sizeof(RGBResv8BitPerColorPixelWriter)];
 PixelWriter* pixel_writer;
@@ -54,11 +52,11 @@ int printk(const char* format, ...){
 char memory_manager_buf[sizeof(BitmapMemoryManager)];
 BitmapMemoryManager* memory_manager;
 
-char mouse_cursor_buf[sizeof(MouseCursor)];
-MouseCursor* mouse_cursor;
+unsigned int mouse_layer_id;
 
 void MouseObserver(int8_t displacement_x, int8_t displacement_y) {
-    mouse_cursor->MoveRelative({displacement_x, displacement_y});
+    layer_manager->MoveRelative(mouse_layer_id, {displacement_x, displacement_y});
+    layer_manager->Draw();
 }
 
 void SwitchEhci2Xhci(const pci::Device& xhc_dev) {
@@ -117,17 +115,11 @@ extern "C" void KernelMainNewStack(const FrameBufferConfig& frame_buffer_config_
             break;
     } 
 
-    const int FRAME_WIDTH = frame_buffer_config.horizontal_resolution;
-    const int FRAME_HEIGHT = frame_buffer_config.vertical_resolution;
-
-    /* draw desktop */
-    FillRectangle(*pixel_writer, {0, 0}, {FRAME_WIDTH, FRAME_HEIGHT - 50}, DESKTOP_BG_COLOR);
-    FillRectangle(*pixel_writer, {0, FRAME_HEIGHT - 50}, {FRAME_WIDTH, 50}, {1, 8, 17});
-    FillRectangle(*pixel_writer, {0, FRAME_HEIGHT - 50}, {FRAME_WIDTH / 5, 50}, {80, 80, 80});
-    DrawRectangle(*pixel_writer, {10, FRAME_HEIGHT - 40}, {30, 30}, {160, 160, 160});
+    DrawDesktop(*pixel_writer);
 
     // create console
-    console = new(console_buf)Console{*pixel_writer, DESKTOP_FG_COLOR, DESKTOP_BG_COLOR};
+    console = new(console_buf)Console{kDesktopFGColor, kDesktopBGColor};
+    console->SetWriter(pixel_writer);
     printk("Welcome to MikanOS!\n");
 
     SetLogLevel(kWarn);
@@ -173,11 +165,6 @@ extern "C" void KernelMainNewStack(const FrameBufferConfig& frame_buffer_config_
         Log(kError, "failed to allocate pages: %s at %s:%d\n", err.Name(), err.File(), err.Line());
         exit(1);
     }
-    
-    // Setup mouse
-    mouse_cursor = new(mouse_cursor_buf) MouseCursor{
-        pixel_writer, DESKTOP_BG_COLOR, {300, 200}
-    };
 
     // setup queue
     std::array<Message, 32> main_queue_data;
@@ -265,6 +252,36 @@ extern "C" void KernelMainNewStack(const FrameBufferConfig& frame_buffer_config_
         }
     }
 
+    // Draw windows
+    const int kFrameWidth = frame_buffer_config.horizontal_resolution;
+    const int kFrameHeight = frame_buffer_config.vertical_resolution;
+    
+    auto bgwindow = std::make_shared<Window>(kFrameWidth, kFrameHeight);
+    auto bgwriter = bgwindow->Writer();
+    
+    DrawDesktop(*bgwriter);
+    console->SetWriter(bgwriter);
+    
+    auto mouse_window = std::make_shared<Window>(
+        kMouseCursorWidth, kMouseCursorHeight);
+    mouse_window->SetTransparentColor(kMouseTransparentColor);
+    DrawMouseCursor(mouse_window->Writer(), {0, 0});
+    
+    layer_manager = new LayerManager;
+    layer_manager->SetWriter(pixel_writer);
+    
+    auto bglayer_id = layer_manager->NewLayer()
+        .SetWindow(bgwindow)
+        .Move({0, 0})
+        .ID();
+    mouse_layer_id = layer_manager->NewLayer()
+        .SetWindow(mouse_window)
+        .Move({200, 200})
+        .ID();
+    
+    layer_manager->UpDown(bglayer_id, 0);
+    layer_manager->UpDown(mouse_layer_id, 1);
+    layer_manager->Draw();
 
     // Process message
     while (true) {
