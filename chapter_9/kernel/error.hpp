@@ -27,6 +27,7 @@ public:
         kUnknownXHCISpeedID,
         kNoWaiter,
         kNoPCIMSI,
+        kUnknownPixelFormat,
         kLastOfCode,
     };
 
@@ -53,6 +54,7 @@ private:
         "kUnknownXHCISpeedID",
         "kNoWaiter",
         "kNoPCIMSI",
+        "kUnknownPixelFormat",
     };
     static_assert(Error::Code::kLastOfCode == m_code_names.size());;
 
